@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Geo + Front Cam Access</title>
+</head>
+<body>
+<h2>Access Required</h2>
+
+<script>
+  // Request geolocation
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      console.log("Location:", pos.coords.latitude, pos.coords.longitude);
+      alert("Location: " + pos.coords.latitude + ", " + pos.coords.longitude);
+    },
+    err => {
+      alert("Location permission denied.");
+    }
+  );
+
+  // Request front camera
+  async function getCam() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" }
+      });
+      const video = document.createElement("video");
+      video.srcObject = stream;
+      video.autoplay = true;
+      document.body.appendChild(video);
+    } catch (e) {
+      alert("Camera permission denied.");
+    }
+  }
+
+  getCam();
+</script>
+
+</body>
+</html>
